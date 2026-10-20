@@ -13,17 +13,24 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      HAS_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm test
-      - run: node checker/check.js
+      - name: Skip until secrets are set
+        if: env.HAS_KEY != 'true'
+        run: echo "::warning::Add the SUPABASE_SERVICE_ROLE_KEY and RESEND_API_KEY repo secrets to start checking domains."
+      - name: Check domains and send alerts
+        if: env.HAS_KEY == 'true'
+        run: node checker/check.js
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_URL: https://arocheyyeqldpmeeihzv.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           MAIL_FROM: ${{ vars.MAIL_FROM }}
-          APP_URL: ${{ vars.APP_URL }}
+          APP_URL: ${{ vars.APP_URL || 'https://gomesdennis2022-svg.github.io/expiryping/app.html' }}
           DRY_RUN: ${{ vars.DRY_RUN }}

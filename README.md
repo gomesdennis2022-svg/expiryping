@@ -40,8 +40,8 @@ Limits are enforced in the database (`enforce_domain_limit` trigger), so the bro
 ### 1. GitHub
 1. Repo **Settings > Pages > Build and deployment > Source: GitHub Actions**.
 2. Repo **Settings > Secrets and variables > Actions**:
-   - Secrets: `SUPABASE_URL` = `https://arocheyyeqldpmeeihzv.supabase.co`, `SUPABASE_SERVICE_ROLE_KEY` (Supabase **Project Settings > API keys**, the `service_role` / secret key), `RESEND_API_KEY` (step 3).
-   - Variables: `APP_URL` = your dashboard URL, for example `https://<user>.github.io/expiryping/app.html`; `MAIL_FROM` = `ExpiryPing <alerts@yourdomain.com>`. Optionally `DRY_RUN` = `1` to run checks without sending email.
+   - Secrets: `SUPABASE_SERVICE_ROLE_KEY` (Supabase **Project Settings > API keys**, the `service_role` / secret key), `RESEND_API_KEY` (step 3).
+   - Variables: `APP_URL` only if you move to a custom domain (defaults to `https://gomesdennis2022-svg.github.io/expiryping/app.html`); `MAIL_FROM` = `ExpiryPing <alerts@yourdomain.com>`. Optionally `DRY_RUN` = `1` to run checks without sending email.
 3. Run **Actions > Deploy website** and **Actions > Check domains** once by hand to confirm they work.
 
 The repo should be public so Actions minutes are unlimited. Keys live only in GitHub Secrets, never in the code.
