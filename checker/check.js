@@ -5,11 +5,15 @@ import {
 } from './lib.js';
 import { lookupRdap, lookupTls } from './net.js';
 
-const env = process.env;
+// Trim keys so a stray space or newline pasted into a secret doesn't break request headers.
+const env = Object.fromEntries(Object.entries(process.env).map(([k, v]) => [k, typeof v === 'string' ? v.trim() : v]));
 const DRY_RUN = env.DRY_RUN === '1';
 const APP_URL = env.APP_URL || 'https://expiryping.com/app.html';
 const MAIL_FROM = env.MAIL_FROM || 'ExpiryPing <alerts@expiryping.com>';
 
+for (const k of ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'RESEND_API_KEY']) {
+  if (env[k] && /\s/.test(env[k])) throw new Error(`${k} contains a space or line break in the middle. Re-paste just the key into the repo secret.`);
+}
 for (const k of ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']) {
   if (!env[k]) throw new Error(`Missing ${k}`);
 }
