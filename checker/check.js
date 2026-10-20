@@ -11,8 +11,24 @@ const DRY_RUN = env.DRY_RUN === '1';
 const APP_URL = env.APP_URL || 'https://expiryping.com/app.html';
 const MAIL_FROM = env.MAIL_FROM || 'ExpiryPing <alerts@expiryping.com>';
 
-for (const k of ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'RESEND_API_KEY']) {
-  if (env[k] && /\s/.test(env[k])) throw new Error(`${k} contains a space or line break in the middle. Re-paste just the key into the repo secret.`);
+// If a secret was pasted with extra text around it, pick out the part that looks like the key.
+function pickKey(name, value, looksRight) {
+  if (!value || !/\s/.test(value)) return value;
+  const parts = value.split(/\s+/).filter(Boolean);
+  const hit = parts.find(looksRight);
+  const shapes = parts.map((p) => `${p.length} chars${looksRight(p) ? ' (looks like the key)' : ''}`).join(', ');
+  console.log(`::warning::${name} has ${parts.length} parts separated by spaces or line breaks: ${shapes}. ${hit ? 'Using the one that looks like the key; re-paste just that part to clear this warning.' : ''}`);
+  if (!hit) throw new Error(`${name} doesn't contain a recognisable key. Re-paste just the key into the repo secret.`);
+  return hit;
+}
+const jwtRole = (t) => {
+  try { return JSON.parse(Buffer.from(t.split('.')[1], 'base64url').toString()).role; } catch { return null; }
+};
+env.SUPABASE_SERVICE_ROLE_KEY = pickKey('SUPABASE_SERVICE_ROLE_KEY', env.SUPABASE_SERVICE_ROLE_KEY,
+  (p) => p.startsWith('sb_secret_') || (p.startsWith('eyJ') && jwtRole(p) === 'service_role'));
+env.RESEND_API_KEY = pickKey('RESEND_API_KEY', env.RESEND_API_KEY, (p) => p.startsWith('re_'));
+if (env.SUPABASE_SERVICE_ROLE_KEY?.startsWith('eyJ') && jwtRole(env.SUPABASE_SERVICE_ROLE_KEY) !== 'service_role') {
+  throw new Error(`SUPABASE_SERVICE_ROLE_KEY is the "${jwtRole(env.SUPABASE_SERVICE_ROLE_KEY)}" key. Use the service_role (secret) key instead.`);
 }
 for (const k of ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']) {
   if (!env[k]) throw new Error(`Missing ${k}`);
