@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ExpiryPing · Never let a client's domain or SSL expire</title>
+<meta name="description" content="ExpiryPing checks every client's domain registration and SSL certificate daily and emails you before anything lapses. Free for 5 domains.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero{display:flex;flex-direction:column;gap:20px;padding-block:24px 8px}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.4rem);letter-spacing:-.01em}
+  .lede{font-size:1.2rem;color:var(--muted)}
+  section{display:flex;flex-direction:column;gap:18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .feat{border-top:2px solid var(--accent);padding-top:10px;display:flex;flex-direction:column;gap:4px}
+  .feat b{font-family:var(--display);font-size:1.08rem}
+  .feat span{color:var(--muted)}
+  .tier{display:flex;flex-direction:column;gap:10px}
+  .tier.main{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .price{font-family:var(--display);font-size:2.1rem;font-weight:700;line-height:1}
+  .price small{font-family:var(--body);font-size:.9rem;font-weight:400;color:var(--muted)}
+  .tier ul{margin:0;padding-left:1.1em;font-size:.95rem}
+  footer{border-top:1px solid var(--line);padding-top:20px;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap stack" style="gap:56px">
+  <header class="row">
+    <a class="brand" href="./">Expiry<span>Ping</span></a>
+    <span class="spacer"></span>
+    <a class="btn ghost" href="app.html">Sign in</a>
+  </header>
+
+  <div class="hero">
+    <span class="eyebrow">For freelancers and agencies who look after client sites</span>
+    <h1>Never let a client's domain or SSL certificate expire again</h1>
+    <p class="lede">Paste in every site you manage. ExpiryPing checks domain registration and SSL every day, emails you at 30, 14, 7, 3 and 1 days before anything lapses, and sends your clients a monthly all-clear report.</p>
+    <div class="row"><a class="btn" href="app.html">Start free with 5 domains</a><span class="muted">No card needed.</span></div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Client site</th><th>Domain renews</th><th>SSL expires</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>bakery-lisboa.pt</td><td>214 days</td><td>61 days</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td>studio-marlow.com</td><td>9 days</td><td>48 days</td><td><span class="pill warn">Renew soon</span></td></tr>
+          <tr><td>shop.greenfern.co</td><td>330 days</td><td>2 days</td><td><span class="pill crit">Urgent</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:.85rem">Example dashboard.</p>
+  </div>
+
+  <section>
+    <h2>Why auto-renew isn't enough</h2>
+    <div class="grid">
+      <div class="feat"><b>Cards expire</b><span>The client's card on file lapses and the registrar quietly gives up. ExpiryPing reads the real expiry date from the registry.</span></div>
+      <div class="feat"><b>Certbot breaks</b><span>A server move or a firewall change stops Let's Encrypt renewing. A daily TLS check catches it weeks early.</span></div>
+      <div class="feat"><b>Wrong certificate</b><span>We flag certificates that don't cover the hostname or have a broken chain, which browsers reject even before expiry.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pricing</h2>
+    <div class="grid">
+      <div class="card tier"><h3>Starter</h3><div class="price">$0</div><ul><li>5 domains</li><li>Email alerts</li></ul><a class="btn ghost" href="app.html">Start free</a></div>
+      <div class="card tier main"><h3>Freelancer</h3><div class="price">$9<small> /month</small></div><ul><li>75 domains</li><li>Monthly client reports</li><li>$90/year option</li></ul><a class="btn" href="app.html">Start free, upgrade inside</a></div>
+      <div class="card tier"><h3>Agency</h3><div class="price">$29<small> /month</small></div><ul><li>500 domains</li><li>Reports under your own brand</li></ul><a class="btn ghost" href="app.html">Start free, upgrade inside</a></div>
+    </div>
+    <p class="muted">Launch offer: lifetime Freelancer plan for $79, limited to the first 50 buyers.</p>
+  </section>
+
+  <footer class="row muted">
+    <span>© 2026 ExpiryPing</span><span class="spacer"></span>
+    <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+  </footer>
+</div>
+</body>
+</html>

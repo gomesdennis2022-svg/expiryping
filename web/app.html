@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dashboard · ExpiryPing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div class="wrap stack" style="gap:28px">
+  <header class="row">
+    <a class="brand" href="./">Expiry<span>Ping</span></a>
+    <span class="spacer"></span>
+    <span id="who" class="muted" hidden></span>
+    <button id="signout" class="ghost small" hidden>Sign out</button>
+  </header>
+
+  <section id="login" class="card stack" hidden style="max-width:460px">
+    <h1 style="font-size:1.6rem">Sign in</h1>
+    <p class="muted">Enter your email and we'll send you a sign-in link. No password needed. New here? This creates your free account.</p>
+    <form id="login-form" class="stack">
+      <label for="email" class="muted" style="font-size:.9rem">Email</label>
+      <input id="email" type="email" required autocomplete="email" placeholder="you@studio.com">
+      <button type="submit" id="login-btn">Email me a sign-in link</button>
+    </form>
+    <div id="login-msg" class="msg" hidden></div>
+  </section>
+
+  <section id="app" class="stack" hidden style="gap:28px">
+    <div class="row">
+      <div class="stack" style="gap:4px">
+        <h1 style="font-size:1.8rem">Your domains</h1>
+        <p id="usage" class="muted"></p>
+      </div>
+      <span class="spacer"></span>
+      <div id="upgrade" class="row"></div>
+    </div>
+
+    <div id="summary" class="row"></div>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Site</th><th>Status</th><th>SSL expires</th><th>Domain renews</th><th>Client</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty" class="muted" hidden>No domains yet. Paste your first ones below. They are checked within the hour, then every day.</p>
+
+    <form id="add-form" class="card stack">
+      <h2 style="font-size:1.2rem">Add domains</h2>
+      <p class="muted" style="font-size:.95rem">One per line. Optionally add the client's name and email after commas, so paid plans can send them a monthly report.</p>
+      <textarea id="add-input" placeholder="bakery-lisboa.pt, Padaria Lisboa, ana@padaria.pt&#10;studio-marlow.com&#10;shop.greenfern.co, Greenfern"></textarea>
+      <div class="row"><button type="submit" id="add-btn">Add domains</button><span id="add-msg" class="muted"></span></div>
+    </form>
+
+    <form id="brand-form" class="card stack" hidden>
+      <h2 style="font-size:1.2rem">Report branding</h2>
+      <p class="muted" style="font-size:.95rem">Client reports are sent under this name instead of ExpiryPing.</p>
+      <div class="row"><input id="brand-input" style="flex:1;min-width:200px" placeholder="Studio Marlow"><button type="submit">Save</button><span id="brand-msg" class="muted"></span></div>
+    </form>
+  </section>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

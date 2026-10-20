@@ -1,0 +1,10 @@
+{
+  "name": "expiryping",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "check": "node checker/check.js",
+    "test": "node --test checker/*.test.js"
+  }
+}
